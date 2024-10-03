@@ -18,6 +18,7 @@ SNAKE_t* create_snake(int x, int y)
     if (NULL == snake || NULL == bodies)
         return NULL; 
 
+    // Initialize every body coordinate. 
     for (i = 0; i < START_LEN; i++)
     {
         (bodies + i)->x = x; 
@@ -95,6 +96,13 @@ int append_body(SNAKE_t *snake, int x, int y)
 
 void change_snake_direction(SNAKE_t *snake, int new_dir)
 {
+    /*
+     * Change the direction of the snake and move it to the direction passed
+     * in argument. Also check if the direction change is allowed. (for example, 
+     * it's impossible to change from UP to DOWN). 
+     * param: *snake: the snake to update. 
+     * param: new_dir: the new direction that need to be checked.  
+     */
     switch (new_dir)
     {
     case UP:
@@ -118,6 +126,7 @@ void change_snake_direction(SNAKE_t *snake, int new_dir)
         break;
     }
 
+    // Move the snake. 
     update_xy_coord(snake); 
     return; 
 }
@@ -192,6 +201,8 @@ void find_next_xy(SNAKE_t *snake, int *new_x, int *new_y)
 
     getmaxyx(stdscr, border_y, border_x);
 
+    // Check if the head position is outside of the board boundaries. If so
+    // Move the snake head to the other side of the board. 
     if (*new_x > border_x - 2)
         *new_x = 1; 
 
@@ -205,3 +216,27 @@ void find_next_xy(SNAKE_t *snake, int *new_x, int *new_y)
         *new_y = border_y - 2; 
 }
 
+
+int snake_body_collision(SNAKE_t *snake)
+{
+    /*
+     * Check if the head has collided with a body part. 
+     */
+    
+    int head_x; 
+    int head_y; 
+    size_t i; 
+
+    head_x = snake->bodies->x; 
+    head_y = snake->bodies->y; 
+
+    // Check for every body that compose the snake if it has the same 
+    // coordinate of the snake head. 
+    for (i = 1; i < snake->len - 1; i++)
+    {
+        if ((snake->bodies + i)->x == head_x && (snake->bodies + i)->y == head_y)
+            return 1; 
+    }
+
+    return 0; 
+}

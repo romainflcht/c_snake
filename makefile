@@ -15,4 +15,4 @@ all:
 
 run: all
 	clear
-	./$(BUILD_DIR)/$(APP_NAME)
+	./$(BUILD_DIR)/$(APP_NAME).out
