@@ -1,13 +1,10 @@
 #include "console.h"
 
 
+// * Initialise the stdscr console window, no cursor and no echo. 
 int init_console()
 {
-    /*
-     * Initialise the stdscr console window, no cursor and no echo. 
-     */
-    
-    if (NULL == initscr())
+    if (!initscr())
         return 1; 
 
     timeout(GAME_SPEED);  
@@ -18,21 +15,18 @@ int init_console()
 }
 
 
+// * Draw the game board to the screen. 
 void draw_board()
 {
-    /*
-     * Draw the game board to the screen. 
-     */
     box(stdscr, 0, 0); 
     mvwaddstr(stdscr, 0, 2, " SNAKE GAME "); 
     return;
 }
 
+
+// * Draw the snake len on the game board. 
 void draw_score(SNAKE_t *snake)
 {
-    /*
-     * Draw the snake len on the game board. 
-     */
     wprintw(stdscr, "| score : %ld ", snake->len); 
     return; 
 }

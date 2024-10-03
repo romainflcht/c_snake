@@ -10,7 +10,7 @@
 
 
 int main() {
-    int     ret; 
+    int     retval; 
     int     max_x; 
     int     max_y; 
     int     is_running; 
@@ -19,8 +19,8 @@ int main() {
     FOOD_t  food; 
 
     // Initialize the ncurses library. 
-    ret = init_console();
-    if (ret) 
+    retval = init_console();
+    if (retval) 
         return 1; 
 
     srand(time(NULL)); 
@@ -44,14 +44,17 @@ int main() {
 
         // -- GAME LOGIC -------------------------------------------------------
         change_snake_direction(snake, get_dir_from_input()); 
-
+        
         if (snake_body_collision(snake))
             is_running = 0; 
 
         if (check_snake_collision(snake, &food))
         {
             set_food_pos(&food); 
-            append_body(snake, (snake->bodies + snake->len - 1)->x, (snake->bodies + snake->len - 1)->x); 
+            retval = append_body(snake, (snake->bodies + snake->len - 1)->x, (snake->bodies + snake->len - 1)->x); 
+
+            if (retval)
+                return 1; 
         }
     }
 

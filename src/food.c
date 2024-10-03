@@ -1,13 +1,10 @@
 #include "food.h"
 
 
+// * Set the position of the food randomly on the board. 
+// * param: *food: the food that need to be placed. 
 void set_food_pos(FOOD_t *food)
 {
-    /*
-     * Set the position of the food randomly on the board. 
-     * param: *food: the food that need to be placed. 
-     */
-
     int x; 
     int y; 
     int x_border; 
@@ -22,15 +19,15 @@ void set_food_pos(FOOD_t *food)
     return; 
 }
 
+// * Check if there is a collision between the head of the snake and the food. 
+// * return: 1 if there is a colision, 0 otherwise. 
 int check_snake_collision(SNAKE_t *snake, FOOD_t *food)
 {
-    /*
-     * Check if there is a collision between the head of the snake and the food. 
-     * return: 1 if there is a colision, 0 otherwise. 
-     */
     return (snake->bodies->x == food->x && snake->bodies->y == food->y);
 }
 
+// * Draw the food to the console window. 
+// * param: *food: the food that need to be drawn. 
 void draw_food(FOOD_t *food) 
 {
     mvwaddch(stdscr, food->y, food->x, FOOD_CHAR); 
