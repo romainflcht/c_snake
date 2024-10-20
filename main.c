@@ -8,8 +8,8 @@
 #include "food.h"
 
 
-
-int main() {
+int main(void) 
+{
     int     retval; 
     int     max_x; 
     int     max_y; 
@@ -25,15 +25,17 @@ int main() {
 
     srand(time(NULL)); 
 
+    // Create the snake. 
     getmaxyx(stdscr, max_y, max_x); 
     snake = create_snake((max_x - 1) / 2, (max_y - 1) / 2); 
 
     set_food_pos(&food); 
     
+    // __ MAIN LOOP ____________________________________________________________
     is_running = 1; 
     while (is_running)
     {
-        // -- RENDER -----------------------------------------------------------
+        // __ RENDER ___________________________________________________________
         draw_board(); 
         draw_score(snake);
 
@@ -42,7 +44,7 @@ int main() {
 
         wrefresh(stdscr);
 
-        // -- GAME LOGIC -------------------------------------------------------
+        // __ GAME LOGIC _______________________________________________________
         change_snake_direction(snake, get_dir_from_input()); 
         
         if (snake_body_collision(snake))
@@ -54,11 +56,14 @@ int main() {
             retval = append_body(snake, (snake->bodies + snake->len - 1)->x, (snake->bodies + snake->len - 1)->x); 
 
             if (retval)
+            {
+                endwin();
                 return 1; 
+            }
         }
     }
 
-    // -- FREEING THE MEMORY ---------------------------------------------------
+    // __ FREEING MEMORY _______________________________________________________
     endwin(); 
     free_snake(snake); 
     return 0;

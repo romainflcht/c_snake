@@ -19,12 +19,14 @@ void set_food_pos(FOOD_t *food)
     return; 
 }
 
+
 // * Check if there is a collision between the head of the snake and the food. 
 // * return: 1 if there is a colision, 0 otherwise. 
 int check_snake_collision(SNAKE_t *snake, FOOD_t *food)
 {
     return (snake->bodies->x == food->x && snake->bodies->y == food->y);
 }
+
 
 // * Draw the food to the console window. 
 // * param: *food: the food that need to be drawn. 
